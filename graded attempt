@@ -1,0 +1,142 @@
+import time
+import random
+
+monsters = ['Hellhound', 'Lemeur', 'Lycanthrope', 'Wendigo']
+inventory = ['Holywater', 'Silver Sword', 'Big heavy stick', 'Gun with silver bullets']
+
+def print_pause(message, delay = 2):
+    time.sleep(delay)
+    print(message)
+
+def valid_input(prompt, options):
+    while True:
+        option = input(prompt).lower()
+        if option in options:
+            return option
+        else:
+            print(f'Sorry, I do not understand "{option}".')
+
+def west(inventory, monsters):
+    new_inventory = random.choice(inventory)
+    print("You have decided to go Wast.\n"
+        "As you walk through the woods you hear a bone chilling howl but can't see where it is coming from\n."
+        "You feel something swipe at your leg. A hellhound is attacking you.")
+    print("What do you do? 1 Fight 2 Flee")
+    choice = valid_input("What would you like to do?" , ["1", "2"])
+    if choice == "1":
+        print("You have chosen to fight. That is not a good idea.")
+        if "Big Heavy Stick" in inventory:
+            print("You take out the big heavy stick and swing it at the unseen enemy.\n"
+            "The stick hits something hard and you hear a yelp.\n"
+            "You run forward until you reach the edge of the clearing you win.")
+            main(inventory, monsters)
+        else:
+            print(f'You try to attack the monster with "{inventory}","but it doesn\'t work.You lose.')
+            main(inventory, monsters)
+    elif choice == "2":
+        print("You have chosen to flee.")
+        clearing(inventory, monsters)
+    
+def east(inventory, monsters):
+    new_inventory = random.choice(inventory)
+    print("You have decided to go east.\n"
+        "As you walk through the woods the temperature drops."
+        "A lemeur appears in front of you.")
+    print("What do you do? 1 Fight 2 Flee")
+    choice = valid_input("What would you like to do?", ["1","2"])
+    if choice == "1":
+        print("You have chosen to fight. That is not a good idea.")
+        if "holy water" in inventory:
+            print("You throw the holy water at the lemeur.\n"
+            "It disappears in a puff of smoke.\n"
+            "You run forward until you reach the edge of the clearing you win.")
+            main(inventory, monsters)
+        else:
+            print(f'You try to attack the monster with "{inventory}","but it doesn\'t work.You lose.')
+            main(inventory, monsters)
+    elif choice == "2":
+        print("You have chosen to flee.")
+        clearing(inventory, monsters)
+
+def south (inventory, monsters):
+    new_inventory = random.choice(inventory)
+    print("You have decided to go South.\n"
+        "As you walk through the woods you hear a blood curdling howl."
+        "A lycanthrope appears in front of you.")
+    print("What do you do? 1 Fight 2 Flee")
+    choice = valid_input("What would you like to do?" , ["1", "2"])
+    if choice == "1":
+        print("You have chosen to fight. That is not a good idea.")
+        if "Silver Sword" in inventory:
+            print("You draw the Silver Sword parrying the claws before they could tear out your throat.\n"
+                "After a fierce fight that leaves you with several scratches. You dispatch the lycanthrope\n"
+                "You will not know until the next full moon if you have escaped the clearing unscathed.")
+            main(inventory, monsters)
+        else:
+            print(f'You try to attack the monster with "{inventory}","but it doesn\'t work.You lose.')
+            main(inventory, monsters)
+    elif choice == "2":
+        print("You have chosen to flee.")
+        clearing(inventory, monsters)
+
+def north(inventory, monsters):
+    new_inventory = random.choice(inventory)
+    print_pause("You look up into the sky at the bigger Dipper and choose to go North\n"
+                "You hear something chasing you, closing on you quickly is a Wendigo.") 
+    print_pause("What do you do? 1 Fight 2 Flee")
+    choice = valid_input("What would you like to do?", ["1", "2"])
+    if choice == "1":
+        print("You have chosen to fight. That is not a good idea.")
+        if "Big Heavy Stick" or "Gun with silver bullets" in inventory:
+                print("You attack the wendigo.\n"
+                "Wounded it runs away from you..\n"
+                "You run forward until you reach the edge of the clearing you win.")
+                main(inventory, monsters)
+        else:
+            print(f'You try to attack the monster with "{inventory}","but it doesn\'t work.You lose.')
+            main(inventory, monsters)
+    elif choice == "2":
+        print("You have chosen to flee.")
+        clearing(inventory, monsters)
+
+def intro(inventory, monsters):
+    print_pause("You find yourself stainding in a clearing. The moon shines down on you from above.\n.")
+    print_pause("You hear howling in the distance. Your goal is to get out of the woods alive.")
+
+def clearing(inventory, monsters):
+        print_pause("What would you like to do?\n."
+            "1  Go east"
+            "2  Go west"
+            "3  Go south"
+            "4  Go north")
+        choice = valid_input("What would you like to do?", ["1", "2", "3", "4"])
+        if "1" in choice:
+            east(inventory, monsters)
+        elif "2" in choice:
+            west(inventory, monsters)
+        elif "3" in choice:
+            south(inventory, monsters)
+        elif "4" in choice:
+            north(inventory, monsters)
+        else: 
+            print("Invalid input. Please choose again")
+            main()
+
+def main(inventory, monsters):
+    while True:
+        choice = valid_input("Would you like to play the game? yes/no", ['yes', 'no'])
+        if 'no' in choice:
+            print_pause('That is  too bad. I am going to go cry now.')
+            exit(0)
+        monsters = []
+        inventory = random.choice(inventory) 
+        intro(inventory, monsters)
+        clearing(inventory, monsters)
+        east(inventory, monsters)
+        west(inventory, monsters)
+        south(inventory, monsters)
+        north(inventory, monsters)
+        break
+
+if __name__ == '__main__':
+    main(inventory, monsters)
